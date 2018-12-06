@@ -14,7 +14,7 @@ if os.path.exists(direct+os.path.sep+'CSV to TPF'+os.path.sep+'DataRecord.txt'):
     os.remove(direct+os.path.sep+'CSV to TPF'+os.path.sep+'DataRecord.txt')
 else:
     DataRecord = open(direct+os.path.sep+'CSV to TPF'+os.path.sep+'DataRecord.txt', 'a')
-print('===============================',time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time())),file=DataRecord)
+print('===============================',time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time())),'===============================',file=DataRecord)
 for content in content:
     if content.find('.csv')!=-1:
         print(total_files+1,content)
