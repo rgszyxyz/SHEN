@@ -1,0 +1,88 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+import os
+
+
+
+def safe_float(number):
+    try:
+        return math.log(float(number),2)
+    except:
+        return '|'
+      
+
+
+index0='2437_CH0'
+index1='2437_CH1'
+index2='5500_CH1'
+index3='5500_CH2'
+content=os.listdir()
+
+
+#-------控制台---------
+control=index2
+name=''
+name_control=[0]
+
+for number in name_control:
+    Pwr=code=''
+    filename="0415_TPC_ES_site1.txt"
+    #filename="0410_TPC_DR2_19_LB6.txt"
+#---------------------
+    i=0
+    with open(filename) as file:
+        lines= file.readlines()
+        for line in lines:
+            #if (lines[i].find("TPC_iPDET_ISPwrSwp_HG_"+control+"_bbf")!=-1 or lines[i].find("TPC_iPDET_ISPwrSwp_LG_"+control+"_bbf")!=-1)and lines[i].find("<") ==-1 and lines[i].find("Trim") ==-1:
+            if (lines[i].find("TPC_iPDET_ISPwrSwp_LG_"+control+"_bbf")!=-1)and lines[i].find("<") ==-1 and lines[i].find("Trim") ==-1:
+                  print(lines[i][104:111],lines[i+1][104:111])
+                  Pwr=Pwr+str(lines[i][104:111])+'|'
+                  code=code+str(lines[i+1][104:111])+'|'
+                  #b.replace(' ','')
+                  Power=Pwr.split("|")
+                  Power.remove('')
+                  Code=code.split('|')
+                  Code.remove('')
+                  #if number==name_control[0]:
+                  x=list(map(float, Power))
+                  y=list(map(float, Code))
+                  '''    
+                  elif number==name_control[1]:
+                      xx=list(map(float, Power))
+                      yy=list(map(float, Code))
+                      
+                  elif number==name_control[2]:
+                      xxx=list(map(float, Power))
+                      yyy=list(map(float, Code))
+                   '''   
+            i=i+1
+
+xset=range(-10,24,1)
+#plt.subplot(111)
+plt.xticks(xset)
+plt.yticks(np.logspace(0, 8, 9,base=2))
+plt.yscale('log')
+plt.xlabel('Power Sweep /dBm')
+plt.ylabel('Code Sweep /Code')
+#for xl, yl in zip(x, y):
+    #plt.text(xl+0.5, yl+0.5, str(yl),ha='center', va='bottom', fontsize=10)
+    #plt.text(xl-0.5, yl, str(xl),ha='center', va='bottom', fontsize=10)               
+
+
+#plt.scatter(x,y,c='r',marker='.')
+#plt.scatter(xx,yy,c='g',marker='.')
+#plt.scatter(xxx,yyy,c='b',marker='.')
+
+plt.plot(x,y,c='r',marker='.')
+#plt.plot(xx,yy,c='g',marker='x')
+#plt.plot(xxx,yyy,c='b',marker='.')
+
+#plt.legend(['25C','25C after -40C'])
+
+
+#--------------------------------------------
+plt.grid(True)
+plt.title(control)
+plt.show()
+      
