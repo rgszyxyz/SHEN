@@ -1,4 +1,5 @@
-# SHEN
+#SHEN：Shanghai Engineer Project
+
 #this project used for ******** test tools
 #please follow  GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 #Pleasw refer http://www.gnu.org/licenses/gpl.txt
