@@ -1,5 +1,5 @@
 # SHEN
-#this project used for apple test tools
+#this project used for ******** test tools
 #please follow  GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 #Pleasw refer http://www.gnu.org/licenses/gpl.txt
 #DEC 26 2018 
