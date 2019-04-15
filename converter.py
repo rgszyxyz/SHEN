@@ -14,7 +14,10 @@ import os
 import sys
 import time
 
+print('Version2.1, 2019-02-19 Modified')
 print('===============================',time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time())),'===============================')
+print('Reg_Write  Delay  Sync  RxGain  Reg_Read  Debug  ModeControl  TxGain  DCOC')
+print('===================================================================================\n')
 direct=input("Enter your Path: ")
 content=os.listdir(direct)
 total_files=1
@@ -24,14 +27,12 @@ if str(content).find('.CSV')==-1 and str(content).find('.csv')==-1:
     
 else:
     if os.path.exists(direct+os.path.sep+'CSV to TPF'):
-        print ('CSV to TPF Files Exist')
+        print ('CSV to TPF Files Exist，Skip This Step')
     else:
         os.makedirs(direct+os.path.sep+'CSV to TPF')
     if os.path.exists(direct+os.path.sep+'CSV to TPF'+os.path.sep+'DataRecord.txt'):
         os.remove(direct+os.path.sep+'CSV to TPF'+os.path.sep+'DataRecord.txt')
-        DataRecord = open(direct+os.path.sep+'CSV to TPF'+os.path.sep+'DataRecord.txt', 'a')
-    else:
-        DataRecord = open(direct+os.path.sep+'CSV to TPF'+os.path.sep+'DataRecord.txt', 'a')
+    DataRecord = open(direct+os.path.sep+'CSV to TPF'+os.path.sep+'DataRecord.txt', 'a')
     print('===============================',time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time())),'===============================',file=DataRecord)
     for content in content:
         if content.find('.csv')!=-1:
@@ -45,7 +46,7 @@ else:
                 total_files=total_files+1
                 for line in file:
     #=======================================================================
-                    if line[0]!=';' and line.find('Reg_Write')==0:
+                    if line[0]!=';' and line.find('Reg_Write',0,10)>=0:
                         cache=line[0:].split(',')
                         waddr=cache[1]
                         wdata=cache[2]
@@ -77,7 +78,7 @@ else:
                                   '\t\t</field>\n'
                                 '\t</frame>\n')
     #========================================================================   
-                    if line[0]!=';' and line.find('Delay')!=-1:
+                    elif line[0]!=';' and line.find('Delay')!=-1:
                         cache=line[0:].split(',')
                         time=cache[2]
                         if line[6]=='u':
@@ -88,7 +89,7 @@ else:
                         str_wait1=str_wait.rstrip('0')
                         f.write('\t<wait time_in_seconds="'+str_wait1+'"/>\n')
     #========================================================================
-                    if line[0]!=';' and line.find('Sync')!=-1:
+                    elif line[0]!=';' and line.find('Sync')!=-1:
                         cache=line[0:].split(',')
                         waddr=cache[1]
                         wdata=cache[2]
@@ -96,7 +97,7 @@ else:
                         f.write('\t<frame name="SYNC'+channel+'" execution_type="Default" mask="" repeat="false"> \n'
                                 '\t</frame>\n')
     #========================================================================
-                    if line[0]!=';' and line.find('RxGain')!=-1:
+                    elif line[0]!=';' and line.find('RxGain')!=-1:
                         RxGain='0'
                         cache=line[0:].split(',')
                         channel=cache[3][-1]
@@ -121,7 +122,7 @@ else:
                                     '\t\t</field>\n'
                                 '\t</frame>\n')
     #========================================================================
-                    if line[0]!=';' and line.find('Reg_Read')==0:
+                    elif line[0]!=';' and line.find('Reg_Read',0,10)>=0:
                         cache=line[0:].split(',')
                         channel=cache[3][-1]
                         waddr=cache[1]
@@ -142,7 +143,7 @@ else:
                                 '\t</frame>\n'
                                 )
     #========================================================================  
-                    if line[0]!=';' and line.find('Debug')!=-1:
+                    elif line[0]!=';' and line.find('Debug')!=-1:
                         Debug='111'
                         cache=line[0:].split(',')
                         channel=cache[3][-1]
@@ -167,7 +168,7 @@ else:
                                     '\t\t</field>\n'
                                 '\t</frame>\n')
     #========================================================================
-                    if line[0]!=';' and line.find('ModeControl')!=-1:
+                    elif line[0]!=';' and line.find('ModeControl')!=-1:
                         code='110'
                         cache=line[0:].split(',')
                         channel=cache[3][-1]
@@ -192,7 +193,7 @@ else:
                                     '\t\t</field>\n'
                                 '\t</frame>\n')
     #========================================================================
-                    if line[0]!=';' and line.find('TxGain')!=-1:
+                    elif line[0]!=';' and line.find('TxGain')!=-1:
                         code='100'
                         cache=line[0:].split(',')
                         channel=cache[3][-1]
@@ -217,7 +218,7 @@ else:
                                     '\t\t</field>\n'
                                 '\t</frame>\n')
     #========================================================================
-                    if line[0]!=';' and line.find('DCOC')!=-1:
+                    elif line[0]!=';' and line.find('DCOC')!=-1:
                         code='101'
                         cache=line[0:].split(',')
                         channel=cache[3][-1]
@@ -240,6 +241,9 @@ else:
                                         '\t\t\t<value hexValue="'+C+'"/>\n'
                                     '\t\t</field>\n'
                                 '\t</frame>\n')
+                    elif line[0]!=';' and line[0]!='' and line[0]!=',' and line[0]!='\n':
+                        print (line)
+                        print (line,end = '',file=DataRecord)
     #========================================================================
             f.write('\t</module>\n'
                 '</module_file>\n')
@@ -249,3 +253,4 @@ else:
     print('Total',total_files,'Files Finished!\nPlease check the DataRecord to see more details')
 
 close=input("You Can Close the Window now")
+
