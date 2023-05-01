@@ -1,6 +1,5 @@
 #open source：please follow  GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 #Pleasw refer http://www.gnu.org/licenses/gpl.txt
-#Nov 26 2018 zhenshen@qti.qualcomm.com
 #Data Record:
 #Nov 22 Start Project, add Reg_write, Debug, Delay, Sycn Function
 #Nov 23 add write file ,mode control, RxGain Funcation
